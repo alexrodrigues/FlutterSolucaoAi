@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:solucao_ai/widget/s_a_camera_widget.dart';
 
 class SACameraScreen extends StatefulWidget {
-  final ROUTE_NAME = "ROUTE_NAME";
   SACameraScreen({Key key}) : super(key: key);
 
   @override
@@ -11,6 +11,8 @@ class SACameraScreen extends StatefulWidget {
 class _SACameraScreenState extends State<SACameraScreen> {
   @override
   Widget build(BuildContext context) {
+    final cameraView = SACameraWidget();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Solução AI"),
@@ -28,6 +30,28 @@ class _SACameraScreenState extends State<SACameraScreen> {
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0,
                   color: Theme.of(context).accentColor),
+            ),
+            SizedBox(height: 16.0),
+            cameraView,
+            SizedBox(height: 16.0),
+            CircleAvatar(
+              backgroundColor: Theme.of(context).accentColor,
+              child: SizedBox(
+                height: 64.0,
+                width: 64.0,
+                child: IconButton(
+                  iconSize: 32.0,
+                  padding: EdgeInsets.all(0.0),
+                  icon: Icon(
+                    Icons.photo_camera,
+                    color: Colors.white,
+                    size: 32.0,
+                  ),
+                  onPressed: () {
+                    cameraView.takePicture();
+                  },
+                ),
+              ),
             ),
           ],
         ),
