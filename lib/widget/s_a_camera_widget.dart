@@ -1,31 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:camerakit/CameraKitController.dart';
 import 'package:camerakit/CameraKitView.dart';
-import 'package:alert/alert.dart';
 
-class SACameraWidget extends StatefulWidget {
-  SACameraWidget({Key key}) : super(key: key);
-
-  final _widgetState = _SACameraWidgetState();
-
-  @override
-  _SACameraWidgetState createState() => _widgetState;
-
-  void takePicture() {
-    _widgetState.takePicture();
-  }
-}
-
-class _SACameraWidgetState extends State<SACameraWidget> {
-  String _platformVersion = 'Unknown';
+class SACameraWidget extends StatelessWidget {
   CameraKitView cameraKitView;
-  CameraFlashMode _flashMode = CameraFlashMode.on;
   CameraKitController cameraKitController;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height - 250.0;
+
     cameraKitController = CameraKitController();
     cameraKitView = CameraKitView(
       hasBarcodeReader: true,
@@ -33,28 +20,6 @@ class _SACameraWidgetState extends State<SACameraWidget> {
       previewFlashMode: CameraFlashMode.auto,
       cameraKitController: cameraKitController,
     );
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    if (!mounted) return;
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  void takePicture() {
-    if (cameraKitController != null) {
-      cameraKitController.takePicture().then((value) {
-        Alert(message: "caminho: $value").show();
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height - 250.0;
 
     return Container(
       width: double.maxFinite,
